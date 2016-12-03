@@ -1,5 +1,5 @@
-Ruby Sample App on OpenShift
-============================
+Ruby Sample App on OpenShift (Rubex)
+====================================
 
 This is a basic ruby application for OpenShift v3 that you can use as a starting point to develop your own application and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
