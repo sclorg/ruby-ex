@@ -22,16 +22,16 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - frontend
-      from:
-        kind: ImageStreamTag
-        name: frontend:latest
+  #triggers:
+  #- type: ConfigChange
+  #- type: ImageChange
+  #  imageChangeParams:
+  #    automatic: true
+  #    containerNames:
+  #    - frontend
+  #    from:
+  #      kind: ImageStreamTag
+  #      name: frontend:latest
 ---
 apiVersion: v1
 kind: Service
