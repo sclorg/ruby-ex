@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Template
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: frontend
+    name: frontend
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: frontend
+    name: frontend
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: frontend:latest
+    source:
+      type: Git
+      git:
+        uri: https://github.com/omallo/ruby-ex
+    strategy:
+      type: Source
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ruby:2.3
+          namespace: openshift
