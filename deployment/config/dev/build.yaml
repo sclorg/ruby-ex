@@ -28,13 +28,3 @@ spec:
         kind: ImageStreamTag
         name: ruby:2.3
         namespace: openshift
-  #triggers:
-  #- type: GitHub
-  #  github:
-  #    secret: vo6X68zZF5Vo7Gr3VE6i
-  #- type: Generic
-  #  generic:
-  #    secret: 1mmeM9GOBvY2aS7rlF0f
-  #- type: ConfigChange
-  #- type: ImageChange
-  #  imageChange: {}
