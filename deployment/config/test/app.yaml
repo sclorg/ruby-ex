@@ -38,3 +38,16 @@ spec:
   selector:
     app: frontend
     deploymentconfig: frontend
+---
+apiVersion: v1
+kind: Route
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: frontend
