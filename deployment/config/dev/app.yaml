@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    app: frontend
+    deploymentconfig: frontend
+  template:
+    metadata:
+      annotations:
+        openshift.io/container.frontend.image.entrypoint: '["container-entrypoint","/bin/sh","-c","$STI_SCRIPTS_PATH/usage"]'
+      labels:
+        app: frontend
+        deploymentconfig: frontend
+    spec:
+      containers:
+      - image: frontend:latest
+        name: frontend
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - frontend
+      from:
+        kind: ImageStreamTag
+        name: frontend:latest
+    type: ImageChange
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: frontend
+    deploymentconfig: frontend
+---
+apiVersion: v1
+kind: Route
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: frontend
