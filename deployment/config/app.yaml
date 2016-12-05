@@ -5,22 +5,22 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      app: frontend
-    name: frontend
+      app: ${APP}
+    name: ${APP}
   spec:
     replicas: 1
     selector:
-      app: frontend
-      deploymentconfig: frontend
+      app: ${APP}
+      deploymentconfig: ${APP}
     template:
       metadata:
         labels:
-          app: frontend
-          deploymentconfig: frontend
+          app: ${APP}
+          deploymentconfig: ${APP}
       spec:
         containers:
-        - image: rubex-dev/${IMAGE_STREAM_TAG}
-          name: frontend
+        - image: ${PROJECT_BASE}-${BUILD_ENV}/${APP}:${ENV}
+          name: ${APP}
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -29,17 +29,17 @@ objects:
       imageChangeParams:
         automatic: false
         containerNames:
-        - frontend
+        - ${APP}
         from:
           kind: ImageStreamTag
           name: ${IMAGE_STREAM_TAG}
-          namespace: rubex-dev
+          namespace: ${PROJECT_BASE}-${BUILD_ENV}
 - apiVersion: v1
   kind: Service
   metadata:
     labels:
-      app: frontend
-    name: frontend
+      app: ${APP}
+    name: ${APP}
   spec:
     ports:
     - name: 8080-tcp
@@ -47,21 +47,33 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      app: frontend
-      deploymentconfig: frontend
+      app: ${APP}
+      deploymentconfig: ${APP}
 - apiVersion: v1
   kind: Route
   metadata:
     labels:
-      app: frontend
-    name: frontend
+      app: ${APP}
+    name: ${APP}
   spec:
     port:
       targetPort: 8080-tcp
     to:
       kind: Service
-      name: frontend
+      name: ${APP}
 parameters:
-- description: The image stream tag from which to deploy.
-  displayName: Image Stream Tag
-  name: IMAGE_STREAM_TAG
+- description: The project base name.
+  displayName: Project base name
+  name: PROJECT_BASE
+  value: rubex
+- description: The application name.
+  displayName: Application name
+  name: APP
+  value: frontend
+- description: The environment in which the image stream is built.
+  displayName: Build environment
+  name: BUILD_ENV
+  value: dev
+- description: The environment into which the app is deployed.
+  displayName: Environment
+  name: ENV
