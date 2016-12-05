@@ -18,25 +18,25 @@ spec:
       kind: ImageStreamTag
       name: frontend:latest
   source:
+    type: Git
     git:
       uri: https://github.com/omallo/ruby-ex
-    type: Git
   strategy:
+    type: Source
     sourceStrategy:
       from:
         kind: ImageStreamTag
         name: ruby:2.3
         namespace: openshift
-    type: Source
   triggers:
-  - github:
+  - type: GitHub
+    github:
       secret: vo6X68zZF5Vo7Gr3VE6i
-    type: GitHub
-  - generic:
+  - type: Generic
+    generic:
       secret: 1mmeM9GOBvY2aS7rlF0f
-    type: Generic
   - type: ConfigChange
-  - imageChange: {}
-    type: ImageChange
+  - type: ImageChange
+    imageChange: {}
 status:
   lastVersion: 0
