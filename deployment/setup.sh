@@ -38,5 +38,5 @@ oc new-project cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n rubex-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n rubex-test
 
-oc new-app library/jenkins:2.19.4
-oc expose svc jenkins --hostname ci.oc.habitz-app.com
+oc new-app --name=ci omallo/oc-jenkins
+oc expose svc ci --hostname ci.oc.habitz-app.com
