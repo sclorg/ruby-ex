@@ -32,7 +32,7 @@ objects:
         - ${APP}
         from:
           kind: ImageStreamTag
-          name: ${IMAGE_STREAM_TAG}
+          name: ${APP}:${ENV}
           namespace: ${PROJECT_BASE}-${BUILD_ENV}
 - apiVersion: v1
   kind: Service
