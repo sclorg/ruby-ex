@@ -12,6 +12,7 @@ node() {
   stage('Deploy to DEV') {
     sh "${ocCmd} process -f ${appConfigUrl} -v ENV=dev -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
+    sh "sleep 5"
     sh "${ocCmd} deploy frontend --latest --follow -n rubex-dev"
   }
 
@@ -24,6 +25,7 @@ node() {
     stage('Deploy to TEST') {
       sh "${ocCmd} process -f ${appConfigUrl} -v ENV=test -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
+      sh "sleep 5"
       sh "${ocCmd} deploy frontend --latest --follow -n rubex-test"
     }
   }

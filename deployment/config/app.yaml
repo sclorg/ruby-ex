@@ -20,6 +20,7 @@ objects:
       spec:
         containers:
         - image: ${PROJECT_BASE}-${BUILD_ENV}/${APP}:${ENV}
+          imagePullPolicy: IfNotPresent
           name: ${APP}
           ports:
           - containerPort: 8080
