@@ -5,12 +5,12 @@ node() {
   def appConfigUrl = "https://raw.githubusercontent.com/omallo/ruby-ex/master/deployment/config/app.yaml"
 
   stage('Build') {
-    sh "${ocCmd} process -f ${buildConfigUrl} | ${ocCmd} apply -f -"
+    sh "${ocCmd} process -f ${buildConfigUrl} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
 
   stage('Deploy to DEV') {
-    sh "${ocCmd} process -f ${appConfigUrl} -v ENV=dev | ${ocCmd} apply -f -"
+    sh "${ocCmd} process -f ${appConfigUrl} -v ENV=dev -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
     sh "${ocCmd} deploy frontend --latest --follow -n rubex-dev"
   }
@@ -22,7 +22,7 @@ node() {
 
   if (isPromoteToTest) {
     stage('Deploy to TEST') {
-      sh "${ocCmd} process -f ${appConfigUrl} -v ENV=test | ${ocCmd} apply -f -"
+      sh "${ocCmd} process -f ${appConfigUrl} -v ENV=test -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
       sh "${ocCmd} deploy frontend --latest --follow -n rubex-test"
     }
