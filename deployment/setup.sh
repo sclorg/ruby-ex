@@ -11,7 +11,7 @@ oc policy add-role-to-user view test1 -n rubex-dev
 
 oc new-project rubex-test
 oc policy add-role-to-user edit test1 -n rubex-test
-oc policy add-role-to-group system:image-puller system:serviceaccount:rubex-test:default -n rubex-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:rubex-test -n rubex-dev
 
 oc login -u dev1 -p dev1
 oc project rubex-dev
