@@ -12,7 +12,8 @@ node() {
   stage('Deploy to DEV') {
     sh "${ocCmd} process -f ${appConfigUrl} -v ENV=dev -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
-    sh "${ocCmd} deploy frontend --follow -n rubex-dev"
+    sh "${ocCmd} rollout latest dc/frontend -n rubex-dev"
+    sh "${ocCmd} rollout status dc/frontend -n rubex-dev"
   }
 
   def isPromoteToTest = false
@@ -24,7 +25,8 @@ node() {
     stage('Deploy to TEST') {
       sh "${ocCmd} process -f ${appConfigUrl} -v ENV=test -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
-      sh "${ocCmd} deploy frontend --follow -n rubex-test"
+      sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
+      sh "${ocCmd} rollout status dc/frontend -n rubex-test"
     }
   }
 }
