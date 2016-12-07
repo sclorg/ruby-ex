@@ -81,4 +81,4 @@ parameters:
 - description: The number of replicas.
   displayName: Replicas
   name: REPLICAS
-  value: 1
+  value: "1"
