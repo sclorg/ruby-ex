@@ -8,7 +8,7 @@ objects:
       app: ${APP}
     name: ${APP}
   spec:
-    #replicas: 1
+    replicas: 1
     selector:
       app: ${APP}
       deploymentconfig: ${APP}
