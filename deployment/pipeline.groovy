@@ -5,6 +5,7 @@ node() {
   def appConfigFile = "deployment/config/app.yaml"
 
   stage('Build') {
+    sh "pwd"
     sh "${ocCmd} process -f ${buildConfigFile} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
