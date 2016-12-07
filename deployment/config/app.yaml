@@ -8,7 +8,7 @@ objects:
       app: ${APP}
     name: ${APP}
   spec:
-    replicas: 1
+    replicas: ${REPLICAS}
     selector:
       app: ${APP}
       deploymentconfig: ${APP}
@@ -78,3 +78,7 @@ parameters:
 - description: The environment into which the app is deployed.
   displayName: Environment
   name: ENV
+- description: The number of replicas.
+  displayName: Replicas
+  name: REPLICAS
+  value: 1
