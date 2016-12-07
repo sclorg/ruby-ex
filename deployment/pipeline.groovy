@@ -1,11 +1,11 @@
+def ocCmd = "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+
+def getReplicasOpt(deploymentConfig, project) {
+  def replicas = sh(script: "${ocCmd} get dc ${deploymentConfig} --template='{{ .spec.replicas }}' -n ${project}", returnStdout: true).trim()
+  return replicas ? "-v REPLICAS=${replicas}" : ""
+}
+
 node() {
-  def ocCmd = "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-
-  def getReplicasOpt(deploymentConfig, project) {
-    def replicas = sh(script: "${ocCmd} get dc ${deploymentConfig} --template='{{ .spec.replicas }}' -n ${project}", returnStdout: true).trim()
-    return replicas ? "-v REPLICAS=${replicas}" : ""
-  }
-
   def buildConfigFile = "deployment/config/build.yaml"
   def appConfigFile = "deployment/config/app.yaml"
 
