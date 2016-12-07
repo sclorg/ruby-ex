@@ -1,12 +1,11 @@
 node() {
   def ocCmd = "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
-  def buildConfigFile = "ruby-ex/deployment/config/build.yaml"
-  def appConfigFile = "ruby-ex/deployment/config/app.yaml"
+  def buildConfigFile = "deployment/config/build.yaml"
+  def appConfigFile = "deployment/config/app.yaml"
 
   stage('Build') {
     git "https://github.com/omallo/ruby-ex.git"
-    sh "ls -la"
     sh "${ocCmd} process -f ${buildConfigFile} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
