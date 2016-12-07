@@ -22,6 +22,7 @@ objects:
       type: Git
       git:
         uri: https://github.com/omallo/ruby-ex
+        ref: master
     strategy:
       type: Source
       sourceStrategy:
