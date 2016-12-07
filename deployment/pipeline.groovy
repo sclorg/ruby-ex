@@ -6,6 +6,7 @@ node() {
 
   stage('Build') {
     sh "pwd"
+    sh "ls"
     sh "${ocCmd} process -f ${buildConfigFile} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
