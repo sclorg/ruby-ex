@@ -4,7 +4,7 @@ def getOcCmd() {
 
 def getReplicasOpt(deploymentConfig, project) {
   def ocCmd = getOcCmd()
-  def replicas = sh(script: "${ocCmd} get dc ${deploymentConfig} --template='{{ .spec.replicas }}' -n ${project}", returnStdout: true).trim()
+  def replicas = sh(script: "${ocCmd} get dc ${deploymentConfig} --template='{{ .spec.replicas }}' -n ${project} || true", returnStdout: true).trim()
   return replicas ? "-v REPLICAS=${replicas}" : ""
 }
 
