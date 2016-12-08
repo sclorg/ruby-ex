@@ -4,15 +4,15 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
+    name: frontend
     labels:
       app: frontend
-    name: frontend
 - apiVersion: v1
   kind: BuildConfig
   metadata:
+    name: frontend
     labels:
       app: frontend
-    name: frontend
   spec:
     output:
       to:

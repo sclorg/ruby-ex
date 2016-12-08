@@ -4,9 +4,9 @@ objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
+    name: ${APP}
     labels:
       app: ${APP}
-    name: ${APP}
   spec:
     replicas: ${REPLICAS}
     selector:
@@ -38,9 +38,9 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
+    name: ${APP}
     labels:
       app: ${APP}
-    name: ${APP}
   spec:
     ports:
     - name: 8080-tcp
@@ -53,9 +53,9 @@ objects:
 - apiVersion: v1
   kind: Route
   metadata:
+    name: ${APP}
     labels:
       app: ${APP}
-    name: ${APP}
   spec:
     port:
       targetPort: 8080-tcp
@@ -82,3 +82,7 @@ parameters:
   displayName: Replicas
   name: REPLICAS
   value: "1"
+- description: The durability of reclaimed storage volumes.
+  displayName: Storage durability
+  name: STORAGE_DURABILITY
+  value: permanent
