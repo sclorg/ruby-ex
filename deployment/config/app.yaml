@@ -2,6 +2,21 @@ apiVersion: v1
 kind: Template
 objects:
 - apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${APP}-data
+    labels:
+      app: ${APP}
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  selector:
+    matchLabels:
+      durability: ${STORAGE_DURABILITY}
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     name: ${APP}
