@@ -22,13 +22,14 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  println "teeeeeest start"
-  def config = getConfig()
-  println config.getClass()
-  println "teeeeeest end"
-
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
+    
+    println "teeeeeest start"
+    def config = getConfig()
+    println config.getClass()
+    println "teeeeeest end"
+
     sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
