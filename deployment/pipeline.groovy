@@ -26,6 +26,8 @@ node() {
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
     
+    println readFile("deployment/config.yaml")
+
     println "teeeeeest start"
     def config = getConfig()
     println config.getClass()
