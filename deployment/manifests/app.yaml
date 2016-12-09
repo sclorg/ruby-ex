@@ -13,9 +13,6 @@ objects:
     resources:
       requests:
         storage: ${STORAGE_SIZE}
-  selector:
-    matchLabels:
-      durability: ${STORAGE_DURABILITY}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -97,10 +94,6 @@ parameters:
   displayName: Replicas
   name: REPLICAS
   value: "1"
-- description: The durability of reclaimed storage volumes.
-  displayName: Storage durability
-  name: STORAGE_DURABILITY
-  value: permanent
 - description: The size of the storage to reclaim.
   displayName: Storage size
   name: STORAGE_SIZE
