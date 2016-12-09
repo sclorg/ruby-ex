@@ -10,7 +10,7 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
   return replicas ?: defaultReplicas
 }
 
-@NoCPS
+@NonCPS
 def getConfig(environment) {
   new Yaml().load(readFile("deployment/config.yaml"))
 }
