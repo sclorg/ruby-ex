@@ -8,7 +8,7 @@ If you'd like to install it, follow [these directions](https://github.com/opensh
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
 ###Installation: 
-These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html).  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
+These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
 1. Fork a copy of [ruby-ex](https://github.com/openshift/ruby-ex)
 2. Add a Ruby application from your new repository:
@@ -21,7 +21,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 
 4. Once the build is running, watch your build progress  
 
-		$ oc build-logs ruby-ex-1
+		$ oc logs build/ruby-ex-1
 
 5. Wait for ruby-ex pods to start up (this can take a few minutes):  
 
