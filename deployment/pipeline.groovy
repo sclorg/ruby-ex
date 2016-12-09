@@ -14,13 +14,13 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  stage('Build') {
+  stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
     sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
 
-  stage('Deploy to DEV') {
+  stage("Deploy to DEV") {
     def replicas = getReplicasOrDefault("frontend", "rubex-dev", 1)
     sh "${ocCmd} process -f ${appManifest} -v ENV=dev -v REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
@@ -29,12 +29,12 @@ node() {
   }
 
   def isPromoteToTest = false
-  stage('Promote to TEST?') {
-    isPromoteToTest = input(message: 'Promotion', parameters: [booleanParam(defaultValue: false, name: 'Promote to TEST?')])
+  stage("Promote to TEST?") {
+    isPromoteToTest = input(message: "Promotion", parameters: [booleanParam(defaultValue: false, name: "Promote to TEST?")])
   }
 
   if (isPromoteToTest) {
-    stage('Deploy to TEST') {
+    stage("Deploy to TEST") {
       def replicas = getReplicasOrDefault("frontend", "rubex-test", 2)
       sh "${ocCmd} process -f ${appManifest} -v ENV=test -v REPLICAS=${replicas} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
