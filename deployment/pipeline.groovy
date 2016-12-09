@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+import org.yaml.snakeyaml.Yaml
 
 def getOcCmd() {
   return "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
@@ -17,7 +17,7 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  def config = new JsonSlurper().parse(configFile)
+  def config = new Yaml().load(configFile)
   println config
 
   stage("Build") {
