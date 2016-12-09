@@ -12,18 +12,17 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig(environment) {
-  new Yaml().load(readFile("deployment/config.yaml"))
+  return new Yaml().load(readFile("deployment/config.yaml"))[environment]
 }
 
 node() {
   def ocCmd = getOcCmd()
 
-  def configFile = "deployment/config.yaml"
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
   println "teeeeeest start"
-  getConfig("dev")
+  println getConfig("dev")
   println "teeeeeest end"
 
   stage("Build") {
