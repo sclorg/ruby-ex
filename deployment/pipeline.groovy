@@ -12,8 +12,8 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  println new Yaml().load(file("deployment/config.yaml")).getClass()
-  return new Yaml().load(file("deployment/config.yaml"))
+  println new Yaml().load(readFile("deployment/config.yaml")).getClass()
+  return new Yaml().load(readFile("deployment/config.yaml"))
 }
 
 node() {
