@@ -1,9 +1,3 @@
-a: 1
-b:
-  x: 37
-c:
-  - aaa
-  - bbb
 dev:
   foo: bar
 test:
