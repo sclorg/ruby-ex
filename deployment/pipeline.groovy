@@ -22,20 +22,18 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  def config = null
-
-  stage("Build") {
+  stage("Checkout") {
     git "https://github.com/omallo/ruby-ex.git"
-
-    config = parseYaml(readFile("deployment/config.yaml"))
-    println config
-    println config.dev
-
-    //sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
-    //sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
 
-  /*stage("Deploy to DEV") {
+  def config = parseYaml(readFile("deployment/config.yaml"))
+
+  stage("Build") {
+    sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    sh "${ocCmd} start-build frontend -w -n rubex-dev"
+  }
+
+  stage("Deploy to DEV") {
     def replicas = getReplicasOrDefault("frontend", "rubex-dev", 1)
     sh "${ocCmd} process -f ${appManifest} -v ENV=dev -v REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
@@ -56,5 +54,5 @@ node() {
       sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
       sh "${ocCmd} rollout status dc/frontend -n rubex-test"
     }
-  }*/
+  }
 }
