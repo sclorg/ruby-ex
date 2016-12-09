@@ -31,13 +31,14 @@ node() {
     println "teeeeeest start"
     def config = getConfig()
     println config.getClass()
+    println config
     println "teeeeeest end"
 
-    sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
-    sh "${ocCmd} start-build frontend -w -n rubex-dev"
+    //sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    //sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
 
-  stage("Deploy to DEV") {
+  /*stage("Deploy to DEV") {
     def replicas = getReplicasOrDefault("frontend", "rubex-dev", 1)
     sh "${ocCmd} process -f ${appManifest} -v ENV=dev -v REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
@@ -58,5 +59,5 @@ node() {
       sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
       sh "${ocCmd} rollout status dc/frontend -n rubex-test"
     }
-  }
+  }*/
 }
