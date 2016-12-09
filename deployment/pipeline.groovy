@@ -11,18 +11,18 @@ def getReplicasOpt(deploymentConfig, project) {
 node() {
   def ocCmd = getOcCmd()
 
-  def buildConfigFile = "deployment/config/build.yaml"
-  def appConfigFile = "deployment/config/app.yaml"
+  def buildManifest = "deployment/manifests/build.yaml"
+  def appManifest = "deployment/manifests/app.yaml"
 
   stage('Build') {
     git "https://github.com/omallo/ruby-ex.git"
-    sh "${ocCmd} process -f ${buildConfigFile} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} start-build frontend -w -n rubex-dev"
   }
 
   stage('Deploy to DEV') {
     def replicasOpt = getReplicasOpt("frontend", "rubex-dev")
-    sh "${ocCmd} process -f ${appConfigFile} -v ENV=dev ${replicasOpt} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    sh "${ocCmd} process -f ${appManifest} -v ENV=dev ${replicasOpt} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
     sh "${ocCmd} rollout latest dc/frontend -n rubex-dev"
     sh "${ocCmd} rollout status dc/frontend -n rubex-dev"
@@ -36,7 +36,7 @@ node() {
   if (isPromoteToTest) {
     stage('Deploy to TEST') {
       def replicasOpt = getReplicasOpt("frontend", "rubex-test")
-      sh "${ocCmd} process -f ${appConfigFile} -v ENV=test ${replicasOpt} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
+      sh "${ocCmd} process -f ${appManifest} -v ENV=test ${replicasOpt} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
       sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
       sh "${ocCmd} rollout status dc/frontend -n rubex-test"
