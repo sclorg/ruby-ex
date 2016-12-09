@@ -35,8 +35,8 @@ oc tag rubex-dev/frontend:latest rubex-dev/frontend:test
 oc login -u admin -p admin
 
 oc new-project cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd:default -n rubex-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd:default -n rubex-test
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
 
-oc new-app --name=ci omallo/oc-jenkins
+oc new-app --name=jenkins omallo/oc-jenkins
 oc expose svc ci --hostname ci.oc.habitz-app.com

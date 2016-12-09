@@ -2,10 +2,10 @@ def getOcCmd() {
   return "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 }
 
-def getReplicasOpt(deploymentConfig, project) {
+def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
   def ocCmd = getOcCmd()
   def replicas = sh(script: "${ocCmd} get dc ${deploymentConfig} --template='{{ .spec.replicas }}' -n ${project} || true", returnStdout: true).trim()
-  return replicas ? "-v REPLICAS=${replicas}" : ""
+  return replicas ?: defaultReplicas
 }
 
 node() {
@@ -21,8 +21,8 @@ node() {
   }
 
   stage('Deploy to DEV') {
-    def replicasOpt = getReplicasOpt("frontend", "rubex-dev")
-    sh "${ocCmd} process -f ${appManifest} -v ENV=dev ${replicasOpt} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    def replicas = getReplicasOrDefault("frontend", "rubex-dev", 1)
+    sh "${ocCmd} process -f ${appManifest} -v ENV=dev,REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
     sh "${ocCmd} rollout latest dc/frontend -n rubex-dev"
     sh "${ocCmd} rollout status dc/frontend -n rubex-dev"
@@ -35,8 +35,8 @@ node() {
 
   if (isPromoteToTest) {
     stage('Deploy to TEST') {
-      def replicasOpt = getReplicasOpt("frontend", "rubex-test")
-      sh "${ocCmd} process -f ${appManifest} -v ENV=test ${replicasOpt} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
+      def replicas = getReplicasOrDefault("frontend", "rubex-test", 2)
+      sh "${ocCmd} process -f ${appManifest} -v ENV=test,REPLICAS=${replicas} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
       sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
       sh "${ocCmd} rollout status dc/frontend -n rubex-test"
