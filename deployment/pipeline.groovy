@@ -18,7 +18,9 @@ node() {
   def appManifest = "deployment/manifests/app.yaml"
 
   def config = new Yaml().load(configFile)
+  println "teeeeeest start"
   println config
+  println "teeeeeest end"
 
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
