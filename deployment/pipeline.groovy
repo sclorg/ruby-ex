@@ -12,9 +12,8 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 }
 
 @NonCPS
-def getConfig() {
-  def yamlAsString = "a: 1\nb: 2\nc:\n  - aaa\n  - bbb"
-  return new Yaml().load(readFile(file: "deployment/config.yaml", encoding: "UTF-8"))
+def getConfig(cfg) {
+  return new Yaml().load(cfg)
 }
 
 node() {
@@ -37,7 +36,7 @@ node() {
     println readFile("deployment/config.yaml")
 
     println "teeeeeest start"
-    def config = getConfig()
+    def config = getConfig(a)
     println config.getClass()
     println config
     println "teeeeeest end"
