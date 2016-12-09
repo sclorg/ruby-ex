@@ -1,4 +1,6 @@
 dev:
-  foo: bar
+  params:
+    REPLICAS: 1
 test:
-  foo2: bar2
+  params:
+    REPLICAS: 2
