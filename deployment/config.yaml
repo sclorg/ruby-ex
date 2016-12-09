@@ -1,4 +1,6 @@
-dev:
-  foo: bar
-test:
-  foo2: bar2
+development:
+     adapter: mysql
+     database: project_development
+     username: root
+     password:
+     socket: /tmp/mysql.sock
