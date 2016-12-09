@@ -13,12 +13,16 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  def yamlAsString = '''a: 1
-                       |b: 2
-                       |c:
-                       |- aaa
-                       |- bbb'''
-  return new Yaml().load(yamlAsString)
+String exampleYaml = '''widgets:
+                       |  - name: blah
+                       |    age: 3000
+                       |    silly: true
+                       |  - name: blah meh
+                       |    age: 13939
+                       |    silly: false
+                       |uuid: 1938484
+                       |isActive: false'''.stripMargin()
+  return new Yaml().load(exampleYaml)
 }
 
 node() {
