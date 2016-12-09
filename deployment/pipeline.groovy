@@ -14,7 +14,7 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 @NonCPS
 def getConfig() {
   def yamlAsString = "a: 1\nb: 2\nc:\n  - aaa\n  - bbb"
-  return new Yaml().load(yamlAsString)
+  return new Yaml().load(readFile(file: "deployment/config.yaml", encoding: "UTF-8"))
 }
 
 node() {
@@ -25,6 +25,14 @@ node() {
 
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
+
+    def a = readFile(file: "deployment/config.yaml", encoding: "UTF-8")
+    def b = "a: 1\nb: 2\nc:\n  - aaa\n  - bbb"
+    if (!a.equals(b)) {
+      println "huch"
+    } else {
+      println "yeah"
+    }
     
     println readFile("deployment/config.yaml")
 
