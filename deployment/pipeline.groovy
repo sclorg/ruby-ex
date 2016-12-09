@@ -12,7 +12,7 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  println "foo::: " + new Yaml(new Constructor(Map.class)).load(readFile("deployment/config.yaml")).getClass()
+  println "foo::: " + new Yaml(new java.reflect.Constructor(java.util.Map.class)).load(readFile("deployment/config.yaml")).getClass()
   return new Yaml().load(readFile("deployment/config.yaml"))
 }
 
