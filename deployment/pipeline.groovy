@@ -13,7 +13,7 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  return new Yaml(new Constructor(Map.class)).load(readFile("deployment/config.yaml"))
+  return new Yaml(new Constructor(Map)).load(readFile("deployment/config.yaml"))
 }
 
 node() {
