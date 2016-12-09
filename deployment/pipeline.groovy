@@ -22,7 +22,7 @@ node() {
 
   stage('Deploy to DEV') {
     def replicas = getReplicasOrDefault("frontend", "rubex-dev", 1)
-    sh "${ocCmd} process -f ${appManifest} -v ENV=dev,REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
+    sh "${ocCmd} process -f ${appManifest} -v ENV=dev -v REPLICAS=${replicas} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     sh "${ocCmd} tag rubex-dev/frontend:latest rubex-dev/frontend:dev"
     sh "${ocCmd} rollout latest dc/frontend -n rubex-dev"
     sh "${ocCmd} rollout status dc/frontend -n rubex-dev"
@@ -36,7 +36,7 @@ node() {
   if (isPromoteToTest) {
     stage('Deploy to TEST') {
       def replicas = getReplicasOrDefault("frontend", "rubex-test", 2)
-      sh "${ocCmd} process -f ${appManifest} -v ENV=test,REPLICAS=${replicas} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
+      sh "${ocCmd} process -f ${appManifest} -v ENV=test -v REPLICAS=${replicas} -n rubex-test | ${ocCmd} apply -f - -n rubex-test"
       sh "${ocCmd} tag rubex-dev/frontend:dev rubex-dev/frontend:test"
       sh "${ocCmd} rollout latest dc/frontend -n rubex-test"
       sh "${ocCmd} rollout status dc/frontend -n rubex-test"
