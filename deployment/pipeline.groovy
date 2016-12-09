@@ -18,7 +18,7 @@ node() {
   def appManifest = "deployment/manifests/app.yaml"
 
   println "teeeeeest start"
-  new Yaml().load(readFile(configFile)).dev.each { e -> println e.toString() }
+  new Yaml().load(readFile(configFile)).dev.each { e -> println "hmm" }
   println "teeeeeest end"
 
   stage("Build") {
