@@ -12,7 +12,7 @@ objects:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
+        storage: ${STORAGE_SIZE}
   selector:
     matchLabels:
       durability: ${STORAGE_DURABILITY}
@@ -101,3 +101,7 @@ parameters:
   displayName: Storage durability
   name: STORAGE_DURABILITY
   value: permanent
+- description: The size of the storage to reclaim.
+  displayName: Storage size
+  name: STORAGE_SIZE
+  value: 5Gi
