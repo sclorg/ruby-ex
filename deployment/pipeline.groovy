@@ -23,6 +23,7 @@ node() {
   println config.dev
   println config.test
   println "teeeeeest end"
+  config = null
 
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
