@@ -22,7 +22,8 @@ node() {
   def appManifest = "deployment/manifests/app.yaml"
 
   println "teeeeeest start"
-  println getConfig("dev")
+  def config = getConfig("dev")
+  println config
   println "teeeeeest end"
 
   stage("Build") {
