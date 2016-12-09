@@ -1,6 +1,5 @@
-development:
-     adapter: mysql
-     database: project_development
-     username: root
-     password:
-     socket: /tmp/mysql.sock
+a: 1
+b: 2
+c:
+  - aaa
+  - bbb
