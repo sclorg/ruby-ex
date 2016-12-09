@@ -11,8 +11,13 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 node() {
   def ocCmd = getOcCmd()
 
+  def configFile = "deployment/config.yaml"
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
+
+  Yaml configFileYaml = new Yaml()
+  def config = configFileYaml.load(configFile)
+  println config
 
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
