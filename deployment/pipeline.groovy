@@ -15,7 +15,7 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  def config = def config = new JsonSlurper().parse(new File(configFile))
+  def config = new JsonSlurper().parse(new File(configFile))
   println config
 
   stage("Build") {
