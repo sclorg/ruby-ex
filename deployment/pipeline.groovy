@@ -10,6 +10,11 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
   return replicas ?: defaultReplicas
 }
 
+@NoCPS
+def getConfig(environment) {
+  new Yaml().load(readFile("deployment/config.yaml"))
+}
+
 node() {
   def ocCmd = getOcCmd()
 
@@ -18,7 +23,7 @@ node() {
   def appManifest = "deployment/manifests/app.yaml"
 
   println "teeeeeest start"
-  new Yaml().load(readFile(configFile))
+  getConfig("dev")
   println "teeeeeest end"
 
   stage("Build") {
