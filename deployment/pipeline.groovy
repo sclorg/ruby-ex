@@ -23,7 +23,7 @@ node() {
 
   println "teeeeeest start"
   def config = getConfig()
-  println config.dev
+  println config.getClass()
   println "teeeeeest end"
 
   stage("Build") {
