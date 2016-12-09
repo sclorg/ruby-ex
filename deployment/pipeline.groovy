@@ -27,6 +27,9 @@ node() {
   }
 
   def config = parseYaml(readFile("deployment/config.yaml"))
+  println config
+  println config.dev
+  println config.test
 
   stage("Build") {
     sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
