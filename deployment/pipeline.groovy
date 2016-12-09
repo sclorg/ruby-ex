@@ -17,11 +17,9 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  def config = new Yaml().load(readFile(configFile))
+  def config = new Yaml().load(readFile(configFile)).dev
   println "teeeeeest start"
   println config
-  println config.dev
-  println config.test
   println "teeeeeest end"
   config = null
 
