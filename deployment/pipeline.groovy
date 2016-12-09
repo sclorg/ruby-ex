@@ -13,8 +13,12 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  def yamlAsString = "{JYaml: Original Java Implementation, JvYaml: Java port of RbYaml, SnakeYAML: Java 5 / YAML 1.1, YamlBeans: To/from JavaBeans}"
-  return new Yaml().load(readFile(file: "deployment/config.yaml", encoding: "UTF-8"))
+  def yamlAsString = '''a: 1
+                       |b: 2
+                       |c:
+                       |- aaa
+                       |- bbb'''
+  return new Yaml().load(yamlAsString)
 }
 
 node() {
