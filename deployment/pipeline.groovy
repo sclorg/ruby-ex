@@ -12,8 +12,8 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 }
 
 @NonCPS
-def getConfig(cfg) {
-  return new Yaml().load(readFile(file: "deployment/config.yaml", encoding: "UTF-8"))
+def parseYaml(content) {
+  return new Yaml().load(content)
 }
 
 node() {
@@ -22,24 +22,13 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
+  def config = null
+
   stage("Build") {
     git "https://github.com/omallo/ruby-ex.git"
 
-    def a = readFile(file: "deployment/config.yaml", encoding: "UTF-8")
-    def b = "a: 1\nb: 2\nc:\n  - aaa\n  - bbb"
-    if (!a.equals(b)) {
-      println "huch"
-    } else {
-      println "yeah"
-    }
-    
-    println readFile("deployment/config.yaml")
-
-    println "teeeeeest start"
-    def config = getConfig(a)
-    println config.getClass()
+    config = parseYaml(readFile("deployment/config.yaml"))
     println config
-    println "teeeeeest end"
 
     //sh "${ocCmd} process -f ${buildManifest} -n rubex-dev | ${ocCmd} apply -f - -n rubex-dev"
     //sh "${ocCmd} start-build frontend -w -n rubex-dev"
