@@ -1,5 +1,3 @@
-import org.yaml.snakeyaml.Yaml
-
 def getOcCmd() {
   return "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 }
@@ -17,8 +15,7 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  Yaml configFileYaml = new Yaml()
-  def config = configFileYaml.load(configFile)
+  def config = def config = new JsonSlurper().parse(new File(configFile))
   println config
 
   stage("Build") {
