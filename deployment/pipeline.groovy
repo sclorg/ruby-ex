@@ -17,9 +17,11 @@ node() {
   def buildManifest = "deployment/manifests/build.yaml"
   def appManifest = "deployment/manifests/app.yaml"
 
-  def config = new Yaml().load(configFile)
+  def config = new Yaml().load(readFile(configFile)
   println "teeeeeest start"
   println config
+  println config.dev
+  println config.test
   println "teeeeeest end"
 
   stage("Build") {
