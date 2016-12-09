@@ -1,4 +1,5 @@
 import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.constructor.Constructor
 
 def getOcCmd() {
   return "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
@@ -12,7 +13,7 @@ def getReplicasOrDefault(deploymentConfig, project, defaultReplicas) {
 
 @NonCPS
 def getConfig() {
-  println "foo::: " + new Yaml(new java.reflect.Constructor(java.util.Map.class)).load(readFile("deployment/config.yaml")).getClass()
+  println "foo::: " + new Yaml(new Constructor(Map.class)).load(readFile("deployment/config.yaml")).getClass()
   return new Yaml().load(readFile("deployment/config.yaml"))
 }
 
