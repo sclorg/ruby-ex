@@ -31,7 +31,7 @@ def ocApplyTemplate(namespace, manifest, parameters) {
 
 def ocDelete(namespace, target) {
   def ocCmd = getOcCmd()
-  sh "${ocCmd} delete ${target.type}/${target.name} -n ${namespace}"
+  sh "${ocCmd} delete ${target.type}/${target.name} -n ${namespace} || true"
 }
 
 def ocBuild(namespace, name, config) {
