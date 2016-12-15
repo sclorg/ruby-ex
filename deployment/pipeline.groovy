@@ -78,8 +78,8 @@ node() {
   }
 
   stage("Deploy to DEV") {
-    ocTag(isNamespace: "rubex-dev", isName: "frontend", sourceTag: "latest", targetTag: "dev")
-    ocDeploy(namespace: "rubex-dev", name: "frontend", config: config.dev.deployment.frontend)
+    ocTag("rubex-dev", "frontend", "latest", "dev")
+    ocDeploy("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 
   def isPromoteToTest = false
@@ -89,8 +89,8 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      ocTag(isNamespace: "rubex-dev", isName: "frontend", sourceTag: "dev", targetTag: "test")
-      ocDeploy(namespace: "rubex-test", name: "frontend", config: config.test.deployment.frontend)
+      ocTag("rubex-dev", "frontend", "dev", "test")
+      ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
 }
