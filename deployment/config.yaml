@@ -2,7 +2,7 @@ dev:
   build:
     frontend:
       templates:
-      - manifest: manifests/build.yaml
+      - manifest: deployment/manifests/build.yaml
   deployment:
     frontend:
       delete:
@@ -17,7 +17,7 @@ test:
   deployment:
     frontend:
       templates:
-      - manifest: manifests/app.yaml
+      - manifest: deployment/manifests/app.yaml
         parameters:
           ENV: test
           REPLICAS: 2
