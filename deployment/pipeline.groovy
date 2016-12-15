@@ -14,6 +14,7 @@ def parseYaml(content) {
   return new Yaml().load(content)
 }
 
+@NonCPS
 def ocTemplateParametersAsCommandLineOpt(parameters) {
   parameters.collect { parameter -> "-v ${parameter}" }.join(" ")
 }
@@ -54,9 +55,11 @@ def ocTag(isNamespace, isName, sourceTag, targetTag) {
 def ocDeploy(namespace, name, config) {
   def replicas = getReplicas(namespace, name)
 
-  config.delete.each { target -> ocDelete(namespace, target) }
+  for (def target : config.delete) {
+    ocDelete(namespace, target)
+  }
 
-  config.templates.each { template -> 
+  for (def template : config.templates) {
     def manifest = template.manifest
     def parameters = template.parameters.clone()
     if (replicas) {
