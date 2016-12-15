@@ -18,7 +18,9 @@ def parseYaml(content) {
 
 @NonCPS
 def ocTemplateParametersAsCommandLineOpt(parameters) {
-  return parameters.collect { parameter -> "-v ${parameter}" }.join(" ")​​​​
+  def parameterOpts = []
+  parameters.each { parameter -> parameterOpts << "-v ${parameter}" }
+  return parameterOpts.join(" ")​​​​
 }
 
 @NonCPS
