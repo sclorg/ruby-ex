@@ -16,6 +16,9 @@ dev:
 test:
   deployment:
     frontend:
+      delete:
+      - type: pvc
+        name: frontend-data
       templates:
       - manifest: deployment/manifests/app.yaml
         parameters:
