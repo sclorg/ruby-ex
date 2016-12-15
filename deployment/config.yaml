@@ -1,6 +1,23 @@
 dev:
-  params:
-    REPLICAS: 1
+  build:
+    frontend:
+      templates:
+      - manifest: manifests/build.yaml
+  deployment:
+    frontend:
+      delete:
+      - type: pvc
+        name: frontend
+      templates:
+      - manifest: manifests/app.yaml
+        parameters:
+          ENV: test
+          REPLICAS: 1
 test:
-  params:
-    REPLICAS: 2
+  deployment:
+    frontend:
+      templates:
+      - manifest: manifests/app.yaml
+        parameters:
+          ENV: test
+          REPLICAS: 2
