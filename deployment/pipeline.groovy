@@ -1,9 +1,11 @@
 import org.yaml.snakeyaml.Yaml
 
+@NonCPS
 def getOcCmd() {
   return "oc --token=`cat /var/run/secrets/kubernetes.io/serviceaccount/token` --server=https://openshift.default.svc.cluster.local --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 }
 
+@NonCPS
 def getReplicas(namespace, name) {
   def ocCmd = getOcCmd()
   return sh(script: "${ocCmd} get dc ${name} --template='{{ .spec.replicas }}' -n ${namespace} || true", returnStdout: true).trim()
@@ -14,26 +16,30 @@ def parseYaml(content) {
   return new Yaml().load(content)
 }
 
+@NonCPS
 def ocTemplateParametersAsCommandLineOpt(parameters) {
-  //return parameters.collect { parameter -> "-v ${parameter}" }.join(" ")​​​​
-  return ""
+  return parameters.collect { parameter -> "-v ${parameter}" }.join(" ")​​​​
 }
 
+@NonCPS
 def ocApplyTemplate(namespace, config) {
   ocApplyTemplate(namespace, config.manifest, config.parameters)
 }
 
+@NonCPS
 def ocApplyTemplate(namespace, manifest, parameters) {
   def ocCmd = getOcCmd()
   def parametersOpt = ocTemplateParametersAsCommandLineOpt(parameters)
   sh "${ocCmd} process -f ${manifest} ${parametersOpt} -n ${namespace} | ${ocCmd} apply -f - -n ${namespace}"
 }
 
+@NonCPS
 def ocDelete(namespace, target) {
   def ocCmd = getOcCmd()
   sh "${ocCmd} delete ${target.type}/${target.name} -n ${namespace}"
 }
 
+@NonCPS
 def ocBuild(namespace, name, config) {
   def ocCmd = getOcCmd()
 
@@ -44,10 +50,12 @@ def ocBuild(namespace, name, config) {
   sh "${ocCmd} start-build ${name} -w -n ${namespace}"
 }
 
+@NonCPS
 def ocTag(isNamespace, isName, sourceTag, targetTag) {
   sh "${ocCmd} tag ${isNamespace}/${isName}:${sourceTag} ${isNamespace}/${isName}:${targetTag}"
 }
 
+@NonCPS
 def ocDeploy(namespace, name, config) {
   def replicas = getReplicas(namespace, name)
 
