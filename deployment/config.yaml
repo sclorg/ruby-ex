@@ -7,7 +7,7 @@ dev:
     frontend:
       delete:
       - type: pvc
-        name: frontend
+        name: frontend-data
       templates:
       - manifest: deployment/manifests/app.yaml
         parameters:
