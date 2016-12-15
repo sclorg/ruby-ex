@@ -36,9 +36,13 @@ def ocDelete(namespace, target) {
 def ocBuild(namespace, name, config) {
   def ocCmd = getOcCmd()
 
-  config.delete.each { target -> ocDelete(namespace, target) }
+  for (def target : config.delete) {
+    ocDelete(namespace, target)
+  }
 
-  config.templates.each { template -> ocApplyTemplate(namespace, template) }
+  for (def template : config.templates) {
+    ocApplyTemplate(namespace, template)
+  }
 
   sh "${ocCmd} start-build ${name} -w -n ${namespace}"
 }
