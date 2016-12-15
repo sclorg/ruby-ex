@@ -9,7 +9,7 @@ dev:
       - type: pvc
         name: frontend
       templates:
-      - manifest: manifests/app.yaml
+      - manifest: deployment/manifests/app.yaml
         parameters:
           ENV: test
           REPLICAS: 1
