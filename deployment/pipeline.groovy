@@ -15,7 +15,8 @@ def parseYaml(content) {
 }
 
 def ocTemplateParametersAsCommandLineOpt(parameters) {
-  return parameters.collect { parameter -> "-v ${parameter}" }.join(" ")​​​​
+  //return parameters.collect { parameter -> "-v ${parameter}" }.join(" ")​​​​
+  return ""
 }
 
 def ocApplyTemplate(namespace, config) {
