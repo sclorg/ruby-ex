@@ -20,7 +20,7 @@ def parseYaml(content) {
 def ocTemplateParametersAsCommandLineOpt(parameters) {
   def parameterOpts = []
   parameters.each { parameter -> parameterOpts << "-v ${parameter}" }
-  return parameterOpts
+  return parameterOpts.join(" ")​​​​
 }
 
 @NonCPS
