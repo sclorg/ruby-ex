@@ -97,7 +97,7 @@ parameters:
 - description: The HTTP port.
   displayName: HTTP port
   name: HTTP_PORT
-  value: 8080
+  value: "8080"
 - description: The size of the storage to reclaim.
   displayName: Storage size
   name: STORAGE_SIZE
