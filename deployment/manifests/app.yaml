@@ -35,7 +35,7 @@ objects:
           imagePullPolicy: Always
           name: ${APP}
           ports:
-          - containerPort: ${HTTP_PORT}
+          - containerPort: 8080
             protocol: TCP
     triggers:
     - type: ImageChange
@@ -55,10 +55,10 @@ objects:
       app: ${APP}
   spec:
     ports:
-    - name: http
-      port: ${HTTP_PORT}
+    - name: 8080-tcp
+      port: 8080
       protocol: TCP
-      targetPort: ${HTTP_PORT}
+      targetPort: 8080
     selector:
       app: ${APP}
       deploymentconfig: ${APP}
@@ -70,7 +70,7 @@ objects:
       app: ${APP}
   spec:
     port:
-      targetPort: http
+      targetPort: 8080-tcp
     to:
       kind: Service
       name: ${APP}
@@ -94,10 +94,6 @@ parameters:
   displayName: Replicas
   name: REPLICAS
   value: "1"
-- description: The HTTP port.
-  displayName: HTTP port
-  name: HTTP_PORT
-  value: "8080"
 - description: The size of the storage to reclaim.
   displayName: Storage size
   name: STORAGE_SIZE
