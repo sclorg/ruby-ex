@@ -80,7 +80,7 @@ node() {
   def config = parseYaml(readFile("deployment/config.yaml"))
 
   stage("Build") {
-    ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
+    ocBuild namespace: "rubex-dev", name: "frontend", config: config.dev.build.frontend
   }
 
   stage("Deploy to DEV") {
