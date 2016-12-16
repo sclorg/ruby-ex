@@ -8,12 +8,12 @@ node() {
   def config = ocutil.parseYaml(readFile("deployment/config.yaml"))
 
   stage("Build") {
-    ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
+    ocutil.ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
   }
 
   stage("Deploy to DEV") {
-    ocTag("rubex-dev", "frontend", "latest", "dev")
-    ocDeploy("rubex-dev", "frontend", config.dev.deployment.frontend)
+    ocutil.ocTag("rubex-dev", "frontend", "latest", "dev")
+    ocutil.ocDeploy("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 
   def isPromoteToTest = false
@@ -23,8 +23,8 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      ocTag("rubex-dev", "frontend", "dev", "test")
-      ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
+      ocutil.ocTag("rubex-dev", "frontend", "dev", "test")
+      ocutil.ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
 }
