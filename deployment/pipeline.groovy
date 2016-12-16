@@ -5,7 +5,7 @@ node() {
     git "https://github.com/omallo/ruby-ex.git"
   }
 
-  def config = ocutil.parseYaml(readFile("deployment/config.yaml"))
+  def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
 
   stage("Build") {
     ocutil.ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
