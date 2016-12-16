@@ -11,7 +11,7 @@ dev:
       templates:
       - manifest: deployment/manifests/app.yaml
         parameters:
-          ENV: test
+          ENV: dev
           REPLICAS: 1
 test:
   deployment:
