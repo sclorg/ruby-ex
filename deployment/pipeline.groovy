@@ -8,7 +8,7 @@ node() {
   def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
 
   stage("Build") {
-    ocutil.ocBuild namespace: "rubex-dev", name: "frontend", config: config.dev.build.frontend
+    ocutil.ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
   }
 
   stage("Deploy to DEV") {
