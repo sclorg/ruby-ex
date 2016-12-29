@@ -38,5 +38,9 @@ oc new-project cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
 
-oc new-app --name=jenkins omallo/oc-jenkins
-oc expose svc ci --hostname ci.oc.habitz-app.com
+oc project openshift
+oc create is oc-jenkins
+oc tag --source=docker --scheduled=true omallo/oc-jenkins:latest openshift/oc-jenkins:latest
+
+#oc new-app --name=jenkins omallo/oc-jenkins
+#oc expose svc ci --hostname ci.oc.habitz-app.com
