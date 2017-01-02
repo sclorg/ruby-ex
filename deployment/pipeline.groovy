@@ -29,8 +29,10 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      sh "git tag ${tagVersion}"
-      sh "git push --tags"
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-omallo', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+        sh "git tag ${tagVersion}"
+        sh "git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/omallo/ruby-ex.git"
+      }
 
       ocutil.ocTag("rubex-dev", "frontend", "dev", tagVersion)
       ocutil.ocTag("rubex-dev", "frontend", tagVersion, "test")
