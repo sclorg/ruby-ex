@@ -6,8 +6,9 @@ node() {
     git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
   }
 
-  def buildVersion = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable FullSemVer", returnStdout: true).trim()
-  def tagVersion = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable MajorMinorPatch", returnStdout: true).trim()
+  def gitVersionCmd = "mono /usr/local/GitVersion_3.6.5/GitVersion.exe"
+  def buildVersion = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
+  def tagVersion = sh(script: "${gitVersionCmd} /showvariable MajorMinorPatch", returnStdout: true).trim()
   echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
 
   def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
