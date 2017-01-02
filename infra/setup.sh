@@ -3,16 +3,16 @@
 sudo htpasswd -b /etc/origin/master/htpasswd dev1 dev1
 sudo htpasswd -b /etc/origin/master/htpasswd test1 test1
 
-oc login -u admin -p admin
-oc new-project cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
-
 oc login -u system:admin
 oc project openshift
 oc delete is oc-jenkins
 oc create is oc-jenkins
 oc tag --source=docker --scheduled=true omallo/oc-jenkins:latest openshift/oc-jenkins:latest
+
+oc login -u admin -p admin
+oc new-project cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
 
 oc login -u admin -p admin
 oc new-project rubex-dev
