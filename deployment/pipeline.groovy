@@ -23,7 +23,9 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      ocutil.ocTag("rubex-dev", "frontend", "dev", "test")
+      def semver = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable FullSemVer", returnStdout: true).trim()
+      ocutil.ocTag("rubex-dev", "frontend", "dev", semver)
+      ocutil.ocTag("rubex-dev", "frontend", semver, "test")
       ocutil.ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
