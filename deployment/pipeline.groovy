@@ -29,11 +29,11 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      sh "git tag ${releaseVersion}"
+      sh "git tag ${tagVersion}"
       sh "git push --tags"
 
-      ocutil.ocTag("rubex-dev", "frontend", "dev", releaseVersion)
-      ocutil.ocTag("rubex-dev", "frontend", releaseVersion, "test")
+      ocutil.ocTag("rubex-dev", "frontend", "dev", tagVersion)
+      ocutil.ocTag("rubex-dev", "frontend", tagVersion, "test")
       ocutil.ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
