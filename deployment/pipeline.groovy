@@ -16,7 +16,7 @@ node() {
 
   stage("Deploy to DEV") {
     ocutil.ocTag("rubex-dev", "frontend", "latest", "dev")
-    ocutil.ocDeploy("rubex-dev", "frontend", config.dev.deployment.frontend)
+    ocutil.ocRollout("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 
   def isPromoteToTest = false
@@ -37,7 +37,7 @@ node() {
 
       ocutil.ocTag("rubex-dev", "frontend", "dev", tagVersion)
       ocutil.ocTag("rubex-dev", "frontend", tagVersion, "test")
-      ocutil.ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
+      ocutil.ocRollout("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
 }
