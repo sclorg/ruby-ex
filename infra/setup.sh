@@ -38,7 +38,9 @@ oc new-project cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
 
+oc login -u system:admin
 oc project openshift
+oc delete is oc-jenkins
 oc create is oc-jenkins
 oc tag --source=docker --scheduled=true omallo/oc-jenkins:latest openshift/oc-jenkins:latest
 
