@@ -6,8 +6,9 @@ node() {
     git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
   }
 
-  def semver = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable FullSemVer", returnStdout: true).trim()
-  echo "semver: ${semver}"
+  def buildVersion = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable FullSemVer", returnStdout: true).trim()
+  def tagVersion = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable MajorMinorPatch", returnStdout: true).trim()
+  echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
 
   def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
 
@@ -27,11 +28,11 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
-      sh "git tag ${semver}"
+      sh "git tag ${releaseVersion}"
       sh "git push --tags"
 
-      ocutil.ocTag("rubex-dev", "frontend", "dev", semver)
-      ocutil.ocTag("rubex-dev", "frontend", semver, "test")
+      ocutil.ocTag("rubex-dev", "frontend", "dev", releaseVersion)
+      ocutil.ocTag("rubex-dev", "frontend", releaseVersion, "test")
       ocutil.ocDeploy("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
