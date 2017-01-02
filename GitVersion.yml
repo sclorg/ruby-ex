@@ -1,1 +1,6 @@
 mode: ContinuousDeployment
+branches:
+  master:
+    mode: ContinuousDeployment
+ignore:
+  sha: []
