@@ -6,7 +6,7 @@ node() {
     git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
   }
 
-  def gitVersionCmd = "mono /usr/local/GitVersion_3.6.5/GitVersion.exe"
+  def gitVersionCmd = "mono /usr/local/GitVersion/GitVersion.exe"
   def buildVersion = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
   def tagVersion = sh(script: "${gitVersionCmd} /showvariable MajorMinorPatch", returnStdout: true).trim()
   echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
