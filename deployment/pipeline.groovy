@@ -15,7 +15,7 @@ node() {
   echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
 
   stage("Build") {
-    sh "sed -i '' 's/{{BUILD_VERSION}}/${buildVersion}/g' config.ru"
+    sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
     ocutil.ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
   }
 
