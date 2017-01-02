@@ -20,6 +20,8 @@ objects:
         name: frontend:latest
     source:
       type: Binary
+      binary:
+        asFile: ""
     strategy:
       type: Source
       sourceStrategy:
