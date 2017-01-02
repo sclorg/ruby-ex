@@ -2,6 +2,7 @@
 
 node() {
   stage("Checkout") {
+    deleteDir()
     git "https://github.com/omallo/ruby-ex.git"
   }
 
