@@ -7,6 +7,7 @@ oc login -u system:admin
 mkdir -p ~/openshift/volumes/
 oc delete -f infra/volumes-local.yaml
 oc apply -f infra/volumes-local.yaml
+oc get pv
 
 oc login -u system:admin
 oc project openshift
