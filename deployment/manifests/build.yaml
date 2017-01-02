@@ -19,10 +19,7 @@ objects:
         kind: ImageStreamTag
         name: frontend:latest
     source:
-      type: Git
-      git:
-        uri: https://github.com/omallo/ruby-ex
-        ref: master
+      type: Binary
     strategy:
       type: Source
       sourceStrategy:
