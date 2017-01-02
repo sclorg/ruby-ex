@@ -3,7 +3,7 @@
 node() {
   stage("Checkout") {
     deleteDir()
-    git "https://github.com/omallo/ruby-ex.git"
+    git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
   }
 
   def semver = sh(script: "mono /usr/local/GitVersion_3.6.5/GitVersion.exe /showvariable FullSemVer", returnStdout: true).trim()
