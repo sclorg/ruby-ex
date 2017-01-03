@@ -3,7 +3,7 @@
 node() {
   stage("Checkout") {
     deleteDir()
-    git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
+    git(url: "https://github.com/omallo/ruby-ex.git", branch: "master", credentialsId: "github-omallo")
   }
 
   def config = occd.parseConfig(readFile("deployment/config.yaml"))
