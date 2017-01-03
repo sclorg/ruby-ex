@@ -1,8 +1,6 @@
 @Library('occd') _
 
 node() {
-  def gitVersionCmd = "mono /usr/local/GitVersion/GitVersion.exe"
-
   stage("Checkout") {
     deleteDir()
     git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
@@ -10,10 +8,9 @@ node() {
 
   def config = occd.parseConfig(readFile("deployment/config.yaml"))
 
-  def fullSemVer = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
-  def buildVersion = "${fullSemVer}+${currentBuild.number}"
-  def tagVersion = sh(script: "${gitVersionCmd} /showvariable MajorMinorPatch", returnStdout: true).trim()
-  echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
+  def buildVersion = occd.getBuildVersion()
+  def releaseVersion = occd.getReleaseVersion()
+  echo "versions: buildVersion=${buildVersion}, releaseVersion=${releaseVersion}"
 
   stage("Build") {
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
@@ -33,12 +30,12 @@ node() {
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-omallo', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-        sh "git tag ${tagVersion}"
+        sh "git tag ${releaseVersion}"
         sh "git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/omallo/ruby-ex.git"
       }
 
-      occd.tag("rubex-dev", "frontend", "dev", tagVersion)
-      occd.tag("rubex-dev", "frontend", tagVersion, "test")
+      occd.tag("rubex-dev", "frontend", "dev", releaseVersion)
+      occd.tag("rubex-dev", "frontend", releaseVersion, "test")
       occd.rollout("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
