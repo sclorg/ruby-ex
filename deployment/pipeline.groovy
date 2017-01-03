@@ -17,12 +17,12 @@ node() {
 
   stage("Build") {
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
-    ocutil.ocBuild("rubex-dev", "frontend", config.dev.build.frontend)
+    ocutil.build("rubex-dev", "frontend", config.dev.build.frontend)
   }
 
   stage("Deploy to DEV") {
-    ocutil.ocTag("rubex-dev", "frontend", "latest", "dev")
-    ocutil.ocRollout("rubex-dev", "frontend", config.dev.deployment.frontend)
+    ocutil.tag("rubex-dev", "frontend", "latest", "dev")
+    ocutil.rollout("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 
   def isPromoteToTest = false
@@ -37,9 +37,9 @@ node() {
         sh "git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/omallo/ruby-ex.git"
       }
 
-      ocutil.ocTag("rubex-dev", "frontend", "dev", tagVersion)
-      ocutil.ocTag("rubex-dev", "frontend", tagVersion, "test")
-      ocutil.ocRollout("rubex-test", "frontend", config.test.deployment.frontend)
+      ocutil.tag("rubex-dev", "frontend", "dev", tagVersion)
+      ocutil.tag("rubex-dev", "frontend", tagVersion, "test")
+      ocutil.rollout("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
 }
