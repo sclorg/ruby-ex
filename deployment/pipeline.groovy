@@ -1,4 +1,4 @@
-@Library('ocutil') _
+@Library('occd') _
 
 node() {
   def gitVersionCmd = "mono /usr/local/GitVersion/GitVersion.exe"
@@ -8,7 +8,7 @@ node() {
     git(url: "https://github.com/omallo/ruby-ex.git", credentialsId: "github-omallo")
   }
 
-  def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
+  def config = occd.parseConfig(readFile("deployment/config.yaml"))
 
   def fullSemVer = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
   def buildVersion = "${fullSemVer}+${currentBuild.number}"
@@ -17,12 +17,12 @@ node() {
 
   stage("Build") {
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
-    ocutil.build("rubex-dev", "frontend", config.dev.build.frontend)
+    occd.build("rubex-dev", "frontend", config.dev.build.frontend)
   }
 
   stage("Deploy to DEV") {
-    ocutil.tag("rubex-dev", "frontend", "latest", "dev")
-    ocutil.rollout("rubex-dev", "frontend", config.dev.deployment.frontend)
+    occd.tag("rubex-dev", "frontend", "latest", "dev")
+    occd.rollout("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 
   def isPromoteToTest = false
@@ -37,9 +37,9 @@ node() {
         sh "git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/omallo/ruby-ex.git"
       }
 
-      ocutil.tag("rubex-dev", "frontend", "dev", tagVersion)
-      ocutil.tag("rubex-dev", "frontend", tagVersion, "test")
-      ocutil.rollout("rubex-test", "frontend", config.test.deployment.frontend)
+      occd.tag("rubex-dev", "frontend", "dev", tagVersion)
+      occd.tag("rubex-dev", "frontend", tagVersion, "test")
+      occd.rollout("rubex-test", "frontend", config.test.deployment.frontend)
     }
   }
 }
