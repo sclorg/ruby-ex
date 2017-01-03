@@ -39,7 +39,7 @@
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>deployment/pipeline.groovy</scriptPath>
+    <scriptPath>deployment/delivery-pipeline.groovy</scriptPath>
   </definition>
   <triggers/>
 </flow-definition>
