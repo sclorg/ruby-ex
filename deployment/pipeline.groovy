@@ -10,7 +10,8 @@ node() {
 
   def config = ocutil.parseConfig(readFile("deployment/config.yaml"))
 
-  def buildVersion = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
+  def fullSemVer = sh(script: "${gitVersionCmd} /showvariable FullSemVer", returnStdout: true).trim()
+  def buildVersion = "${fullSemVer}+${currentBuild.number}"
   def tagVersion = sh(script: "${gitVersionCmd} /showvariable MajorMinorPatch", returnStdout: true).trim()
   echo "versions: buildVersion=${buildVersion}, tagVersion=${tagVersion}"
 
