@@ -12,7 +12,7 @@ node() {
   def releaseVersion = occd.getReleaseVersion()
 
   stage("Build") {
-    echo "versions: buildVersion=${buildVersion}, releaseVersion=${releaseVersion}"
+    echo "versions: build=${buildVersion}, next-release=${releaseVersion}"
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
     occd.build("rubex-dev", "frontend", config.dev.build.frontend)
   }
