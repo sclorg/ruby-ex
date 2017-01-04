@@ -28,6 +28,7 @@ objects:
           kind: ImageStreamTag
           name: ruby:2.3
           namespace: openshift
+parameters:
 - description: The image stream tag to build to.
   displayName: Output image stream tag
   name: OUTPUT_IMAGE_STREAM_TAG
