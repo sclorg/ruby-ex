@@ -39,8 +39,8 @@ oc process \
     -v VOLUME_CAPACITY=5Gi \
     | oc apply -f -
 
-mkdir -p ~/openshift/volumes/disk-1/jobs/rubex-frontend
-cp deployment/job-config.xml ~/openshift/volumes/disk-1/jobs/rubex-frontend/config.xml
+mkdir -p ~/openshift/volumes/disk-1/jobs/rubex-frontend-delivery
+cp deployment/delivery-job-config.xml ~/openshift/volumes/disk-1/jobs/rubex-frontend-delivery/config.xml
 
 # ---
 
