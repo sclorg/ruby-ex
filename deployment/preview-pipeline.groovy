@@ -2,7 +2,7 @@
 
 node() {
   stage("Deploy to PREV") {
-    occd.tag("rubex-dev", "frontend", "${SOURCE_IMAGE_STREAM_TAG}", "prev")
+    occd.tag("rubex-dev", "frontend", "b-${BRANCH}", "prev")
     occd.rollout("rubex-prev", "frontend", config.prev.deployment.frontend)
   }
 }
