@@ -14,7 +14,7 @@ node() {
   stage("Build") {
     echo "versions: build=${buildVersion}, next-release=${releaseVersion}"
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
-    occd.build("rubex-dev", "frontend-master", config.dev.build.frontend)
+    occd.build("rubex-dev", "frontend-master", "deployment/manifests/build.yaml", "master")
   }
 
   stage("Deploy to DEV") {

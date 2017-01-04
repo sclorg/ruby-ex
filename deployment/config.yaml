@@ -1,10 +1,4 @@
 dev:
-  build:
-    frontend:
-      templates:
-      - manifest: deployment/manifests/build.yaml
-        parameters:
-          BRANCH: master
   deployment:
     frontend:
       templates:
