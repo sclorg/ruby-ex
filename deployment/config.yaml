@@ -4,7 +4,7 @@ dev:
       templates:
       - manifest: deployment/manifests/build.yaml
         parameters:
-          TARGET_IMAGE_STREAM_TAG: b-master
+          OUTPUT_IMAGE_STREAM_TAG: b-master
   deployment:
     frontend:
       templates:
