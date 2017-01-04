@@ -4,20 +4,20 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: frontend
+    name: ${APP}
     labels:
-      app: frontend
+      app: ${APP}
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: frontend
+    name: ${APP}-${BRANCH}
     labels:
-      app: frontend
+      app: ${APP}
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: frontend:${OUTPUT_IMAGE_STREAM_TAG}
+        name: ${APP}:b-${BRANCH}
     source:
       type: Binary
       binary: {}
@@ -29,6 +29,10 @@ objects:
           name: ruby:2.3
           namespace: openshift
 parameters:
-- description: The image stream tag to build to.
-  displayName: Output image stream tag
-  name: OUTPUT_IMAGE_STREAM_TAG
+- description: The application name.
+  displayName: Application name
+  name: APP
+  value: frontend
+- description: The branch being built.
+  displayName: Branch
+  name: BRANCH
