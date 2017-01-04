@@ -18,7 +18,7 @@ node() {
   }
 
   stage("Deploy to DEV") {
-    occd.tag("rubex-dev", "frontend", "latest", "dev")
+    occd.tag("rubex-dev", "frontend", "b-master", "dev")
     occd.rollout("rubex-dev", "frontend", config.dev.deployment.frontend)
   }
 

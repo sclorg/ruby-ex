@@ -17,7 +17,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: frontend:latest
+        name: frontend:${TARGET_IMAGE_STREAM_TAG}
     source:
       type: Binary
       binary: {}
@@ -28,3 +28,6 @@ objects:
           kind: ImageStreamTag
           name: ruby:2.3
           namespace: openshift
+- description: The image stream tag to build to.
+  displayName: Target image stream tag
+  name: TARGET_IMAGE_STREAM_TAG
