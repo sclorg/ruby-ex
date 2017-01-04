@@ -85,7 +85,6 @@ ul {
 
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
