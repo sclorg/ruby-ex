@@ -1,3 +1,11 @@
+prev:
+  deployment:
+    frontend:
+      templates:
+      - manifest: deployment/manifests/app.yaml
+        parameters:
+          ENV: prev
+          REPLICAS: 1
 dev:
   deployment:
     frontend:

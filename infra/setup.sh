@@ -16,9 +16,9 @@ oc create is oc-jenkins
 oc tag --source=docker --scheduled=true omallo/oc-jenkins:latest openshift/oc-jenkins:latest
 
 oc login -u admin -p admin
-oc new-project cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
+oc new-project rubex-prev
+oc policy add-role-to-user edit dev1 -n rubex-prev
+oc policy add-role-to-user view test1 -n rubex-prev
 
 oc login -u admin -p admin
 oc new-project rubex-dev
@@ -28,7 +28,14 @@ oc policy add-role-to-user view test1 -n rubex-dev
 oc login -u admin -p admin
 oc new-project rubex-test
 oc policy add-role-to-user edit test1 -n rubex-test
+oc policy add-role-to-group system:image-puller system:serviceaccounts:rubex-prev -n rubex-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:rubex-test -n rubex-dev
+
+oc login -u admin -p admin
+oc new-project cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-prev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n rubex-test
 
 oc login -u admin -p admin
 oc project cicd
