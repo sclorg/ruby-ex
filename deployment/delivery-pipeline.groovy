@@ -8,12 +8,12 @@ node() {
 
   def config = occd.parseConfig(readFile("deployment/config.yaml"))
 
-  def buildVersion = occd.getBuildVersion()
-  def releaseVersion = occd.getReleaseVersion()
-
   stage("Build") {
-    echo "versions: build=${buildVersion}, next-release=${releaseVersion}"
+    def buildVersion = occd.getDeliveryBuildVersion()
+    echo "buildVersion=${buildVersion}"
+
     sh "sed -e 's/{{BUILD_VERSION}}/${buildVersion}/g' -i config.ru"
+
     occd.build("rubex-dev", "frontend-master", "deployment/manifests/build.yaml", "master")
   }
 
@@ -29,6 +29,9 @@ node() {
 
   if (isPromoteToTest) {
     stage("Deploy to TEST") {
+      def releaseVersion = occd.getReleaseVersion()
+      echo "releaseVersion=${releaseVersion}"
+
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-omallo', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
         sh "git tag ${releaseVersion}"
         sh "git push --tags https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/omallo/ruby-ex.git"
