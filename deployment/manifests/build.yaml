@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Template
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: ${APP}
+    labels:
+      app: ${APP}
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: ${APP}-${BRANCH}
+    labels:
+      app: ${APP}
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${APP}:b-${BRANCH}
+    source:
+      type: Binary
+      binary: {}
+    strategy:
+      type: Source
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ruby:2.3
+          namespace: openshift
+parameters:
+- description: The application name.
+  displayName: Application name
+  name: APP
+  value: frontend
+- description: The branch being built.
+  displayName: Branch
+  name: BRANCH

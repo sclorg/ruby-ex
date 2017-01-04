@@ -1,0 +1,24 @@
+prev:
+  deployment:
+    frontend:
+      templates:
+      - manifest: deployment/manifests/app.yaml
+        parameters:
+          ENV: prev
+          REPLICAS: 1
+dev:
+  deployment:
+    frontend:
+      templates:
+      - manifest: deployment/manifests/app.yaml
+        parameters:
+          ENV: dev
+          REPLICAS: 1
+test:
+  deployment:
+    frontend:
+      templates:
+      - manifest: deployment/manifests/app.yaml
+        parameters:
+          ENV: test
+          REPLICAS: 2

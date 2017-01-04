@@ -85,7 +85,6 @@ ul {
 
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -226,9 +225,8 @@ pre {
 
 <section class='container'>
           <hgroup>
-            <h1>Welcome to your Ruby application on OpenShift</h1>
+            <h1>Welcome to your Ruby application on OpenShift (version {{BUILD_VERSION}})</h1>
           </hgroup>
-
 
         <div class="row">
           <section class='col-xs-12 col-sm-6 col-md-6'>
