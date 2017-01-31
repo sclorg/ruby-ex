@@ -11,6 +11,19 @@ map '/lobster' do
   run Rack::Lobster.new
 end
 
+map '/headers' do
+  headers = proc do |env|
+    [200, { "Content-Type" => "text/html" }, [
+      env.select {|key,val| key.start_with? 'HTTP_'}
+      .collect {|key, val| [key.sub(/^HTTP_/, ''), val]}
+      .collect {|key, val| CGI::escapeHTML "#{key}: #{val}"}
+      .sort
+      .join("<br/>\n")
+    ]]
+  end
+  run headers
+end
+
 map '/' do
   welcome = proc do |env|
     [200, { "Content-Type" => "text/html" }, [<<WELCOME_CONTENTS
