@@ -7,7 +7,7 @@ If you'd like to install it, follow [these directions](https://github.com/opensh
 
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
-###Installation: 
+### Installation
 These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
 1. Fork a copy of [ruby-ex](https://github.com/openshift/ruby-ex)
@@ -51,11 +51,11 @@ In this case, the IP for ruby-ex is 172.30.97.209 and it is on port 8080.
 *Note*: you can also get this information from the web console.
 
 
-###Debugging Unexpected Failures
+### Debugging Unexpected Failures
 
 Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
 
-###Adding Webhooks and Making Code Changes
+### Adding Webhooks and Making Code Changes
 Since OpenShift V3 does not provide a git repository out of the box, you can configure your github repository to make a webhook call whenever you push your code.
 
 1. From the console navigate to your project.  
@@ -65,5 +65,5 @@ Since OpenShift V3 does not provide a git repository out of the box, you can con
 5. Paste your copied webhook url provided by OpenShift - Thats it!  
 6. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
 
-###License
+### License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
