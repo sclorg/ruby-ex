@@ -25,7 +25,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 1. Fork a copy of [ruby-ex](https://github.com/openshift/ruby-ex)
 2. Add a Ruby application from your new repository:
 
-		$ oc new-app openshift/ruby-20-centos7~https://github.com/< yourusername >/ruby-ex 
+		$ oc new-app openshift/ruby-24-centos7~https://github.com/< yourusername >/ruby-ex 
 
 3. A build should start immediately.  To run another build, run:
 
