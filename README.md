@@ -74,8 +74,9 @@ Since OpenShift V3 does not provide a git repository out of the box, you can con
 2. Click on Browse > Builds  
 3. From the view for your Build click on the link to display your GitHub webhook and copy the url.  
 4. Navigate to your repository on GitHub and click on repository settings > webhooks  
-5. Paste your copied webhook url provided by OpenShift - Thats it!  
-6. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
+5. Paste your copied webhook url provided by OpenShift
+6. Change the Content type to `application/json` - Thats it!
+7. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
 
 ### License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
