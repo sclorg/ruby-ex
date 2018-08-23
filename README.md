@@ -15,14 +15,14 @@ Ruby Sample App on OpenShift
 
 This is a basic ruby application for OpenShift v3 that you can use as a starting point to develop your own application and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
-If you'd like to install it, follow [these directions](https://github.com/openshift/ruby-ex/blob/master/README.md#installation).  
+If you'd like to install it, follow [these directions](https://github.com/sclorg/ruby-ex/blob/master/README.md#installation).  
 
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
 ### Installation
 These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
-1. Fork a copy of [ruby-ex](https://github.com/openshift/ruby-ex)
+1. Fork a copy of [ruby-ex](https://github.com/sclorg/ruby-ex)
 2. Add a Ruby application from your new repository:
 
 		$ oc new-app openshift/ruby-24-centos7~https://github.com/< yourusername >/ruby-ex 
