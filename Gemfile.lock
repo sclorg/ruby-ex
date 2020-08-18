@@ -1,8 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    puma (3.12.0)
-    rack (2.0.6)
+    nio4r (2.5.2)
+    puma (4.3.5)
+      nio4r (~> 2.0)
+    rack (2.2.3)
 
 PLATFORMS
   ruby
