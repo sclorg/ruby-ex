@@ -12,6 +12,3 @@ PLATFORMS
 DEPENDENCIES
   puma
   rack
-
-BUNDLED WITH
-   1.16.4
